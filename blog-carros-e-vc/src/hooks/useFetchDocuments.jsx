@@ -4,85 +4,54 @@ import { collection, query, orderBy, onSnapshot, where } from "firebase/firestor
 
 
 export const useFetchDocuments = (docCollection, search = null, uid = null) => {
-
     const [documents, setDocuments] = useState(null)
     const [error, setError] = useState(null)
-    const [loading, setLoading] = useState(null)
-
-    // deal with memory leak
-    const [cancelled, setCancelled] = useState(false)
-
+    const [loading, setLoading] = useState(true)
 
     useEffect(() => {
+        setLoading(true)
+        setError(null)
 
-        const loadData = async () => {
-            if (cancelled) return
+        const collectionRef = collection(db, docCollection)
 
-            setLoading(true)
+        let q
 
-            const collectionRef = await collection(db, docCollection)
-
-            try {
-                
-                let q 
-
-                if (search) {               //busca
-                    q = await query(
-                        collectionRef, 
-                        where("tagsArray", "array-contains", search), 
-                        orderBy("createdAt", "desc")
-                    )
-                    
-                } else if (uid) {           //dashboard
-                    q = await query(
-                        collectionRef, 
-                        where("uid", "==", uid), 
-                        orderBy("createdAt", "desc")
-                    )
-
-                } else {
-                    q = await query(collectionRef, orderBy("createdAt", "desc"))
-                }
-
-                await onSnapshot(q, (querySnapshot) => {
-
-                    setDocuments(
-                        querySnapshot.docs.map((doc) => ({
-                            id: doc.id,
-                            ...doc.data()
-                        }))
-                    )
-                })
-
-                setLoading(false)
-
-            } catch (error) {
-
-                console.log(error)
-                setError(error.message)
-
-                setLoading(false)
-                
-            }
-
-
+        if (search) {
+            q = query(
+                collectionRef,
+                where("tagsArray", "array-contains", search),
+                orderBy("createdAt", "desc")
+            )
+        } else if (uid) {
+            q = query(
+                collectionRef,
+                where("uid", "==", uid),
+                orderBy("createdAt", "desc")
+            )
+        } else {
+            q = query(collectionRef, orderBy("createdAt", "desc"))
         }
 
+        const unsubscribe = onSnapshot(
+            q,
+            (querySnapshot) => {
+                setDocuments(
+                    querySnapshot.docs.map((doc) => ({
+                        id: doc.id,
+                        ...doc.data()
+                    }))
+                )
+                setLoading(false)
+            },
+            (error) => {
+                console.log(error)
+                setError(error.message)
+                setLoading(false)
+            }
+        )
 
-        loadData()
-
-    }, [docCollection, search, uid, cancelled])
-
-
-    useEffect(() => {
-
-        return () => setCancelled(true)
-
-    }, [])
-
+        return () => unsubscribe()
+    }, [docCollection, search, uid])
 
     return { documents, loading, error }
-
-
-
 }

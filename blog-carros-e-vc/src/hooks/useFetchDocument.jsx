@@ -1,54 +1,48 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { db } from "../firebase/config"
 import { doc, getDoc } from "firebase/firestore"
 
 
 export const useFetchDocument = (docCollection, id) => {
-
     const [document, setDocument] = useState(null)
     const [error, setError] = useState(null)
-    const [loading, setLoading] = useState(null)
-
-    // deal with memory leak
-    const [cancelled, setCancelled] = useState(false)
-
+    const [loading, setLoading] = useState(true)
+    const isCancelled = useRef(false)
 
     useEffect(() => {
+        isCancelled.current = false
 
         const loadDocument = async () => {
-            if (cancelled) return
 
             setLoading(true)
+            setError(null)
 
             try {
-                const docRef = await doc(db, docCollection, id)
+                const docRef = doc(db, docCollection, id)
                 const docSnap = await getDoc(docRef)
 
+                if (isCancelled.current) return
+
                 setDocument(docSnap.data())
-
-                setLoading(false)
-
             } catch (error) {
+                if (isCancelled.current) return
+
                 console.log(error)
                 setError(error.message)
-                
-                setLoading(false)
+            } finally {
+                if (!isCancelled.current) {
+                    setLoading(false)
+                }
             }
-
         }
 
         loadDocument()
 
+        return () => {
+            isCancelled.current = true
+        }
+        
     }, [docCollection, id])
 
-
-    useEffect(() => {
-
-        return () => setCancelled(true)
-
-    }, [])
-
-
     return { document, loading, error }
-
 }
