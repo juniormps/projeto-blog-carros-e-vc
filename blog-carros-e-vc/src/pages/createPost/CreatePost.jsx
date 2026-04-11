@@ -11,7 +11,7 @@ const CreatePost = () => {
     const [title, setTitle] = useState("")
     const [image, setImage] = useState("")
     const [body, setBody] = useState("")
-    const [tags, setTags] = useState([])
+    const [tags, setTags] = useState("")
     const [formError, setFormError] = useState("")
 
     const { user } = useAuthValue()
@@ -20,31 +20,41 @@ const CreatePost = () => {
 
     const navigate = useNavigate()
 
-    const handleSubmit = (e) => {
+    const handleChange = (setter) => (e) => {
+        setFormError("")
+        setter(e.target.value)
+    }
+
+    const handleSubmit = async (e) => {
         e.preventDefault()
+        setFormError("")
+
+        let errorMessage = ""
+
+        // check values
+        if (!title || !image || !tags || !body) {
+            errorMessage = "Por favor, preencha todos os campos!"
+        }
 
         // validate image
-        try {
-            new URL(image)
+        if (!errorMessage) {
+            try {
+                new URL(image)
 
-        } catch (error) {
-            setFormError("A imagem precisa ser uma URL.")
+            } catch {
+                errorMessage = "A imagem precisa ser uma URL."
+            }
+        }
 
+        if (errorMessage) {
+            setFormError(errorMessage)
+            return
         }
 
         // create tags array
         const tagsArray = tags.split(",").map((tag) => tag.trim().toLowerCase())
 
-        // check values
-        if (!title || !image || !tags || !body) {
-
-            setFormError("Por favor, preencha todos os campos!")
-
-        }
-
-        if (formError) return
-
-        insertDocument({
+        const insertedDocument = await insertDocument({
             title,
             image,
             body,
@@ -54,7 +64,9 @@ const CreatePost = () => {
         })
 
         // redirect to home page
-        navigate("/");
+        if (insertedDocument) {
+            navigate("/");
+        }
 
     }
 
@@ -74,9 +86,8 @@ const CreatePost = () => {
                 <input 
                     type="text" 
                     name='title' 
-                    required 
                     placeholder='E-mail do Pense num bom título...' 
-                    onChange={(e) => setTitle(e.target.value)}
+                    onChange={handleChange(setTitle)}
                     value={title}
                 />
             </label>
@@ -86,9 +97,8 @@ const CreatePost = () => {
                 <input 
                     type="text" 
                     name='image' 
-                    required 
                     placeholder='Insira uma imagem que representa seu post...' 
-                    onChange={(e) => setImage(e.target.value)}
+                    onChange={handleChange(setImage)}
                     value={image}
                 />
             </label>
@@ -97,9 +107,8 @@ const CreatePost = () => {
                 <span>Conteúdo:</span>
                 <textarea 
                     name='body' 
-                    required 
                     placeholder='Insira o conteúdo do post' 
-                    onChange={(e) => setBody(e.target.value)}
+                    onChange={handleChange(setBody)}
                     value={body}
                 ></textarea>
             </label>
@@ -109,9 +118,8 @@ const CreatePost = () => {
                 <input 
                     type="text" 
                     name='tegs' 
-                    required 
                     placeholder='Insira as tags separadas por vírgula' 
-                    onChange={(e) => setTags(e.target.value)}
+                    onChange={handleChange(setTags)}
                     value={tags}
                 />
             </label>

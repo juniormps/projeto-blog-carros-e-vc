@@ -55,12 +55,16 @@ export const useInsertDocument = (docCollection) => {
                 payload: insertedDocument
             })
 
+            return insertedDocument
+
         } catch (error) {
 
             checkCancelBeforeDispatch({ 
                 type: "ERROR", 
                 payload: error.message 
             })
+
+            return null
         }
     }
 

@@ -43,7 +43,7 @@ export const useUpdateDocument = (docCollection) => {
 
         try {
 
-            const docRef = await doc(db, docCollection, id)
+            const docRef = doc(db, docCollection, id)
 
             const updatedDocument = await updateDoc(docRef, data)
 
@@ -52,12 +52,16 @@ export const useUpdateDocument = (docCollection) => {
                 payload: updatedDocument
             })
 
+            return true
+
         } catch (error) {
 
             checkCancelBeforeDispatch({ 
                 type: "ERROR", 
                 payload: error.message 
             })
+
+            return false
         }
     }
 
