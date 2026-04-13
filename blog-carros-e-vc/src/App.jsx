@@ -28,6 +28,7 @@ import Register from './pages/register/Register'
 import CreatePost from './pages/createPost/CreatePost'
 import Dashboard from './pages/dashboard/Dashboard'
 import EditPost from './pages/editPost/EditPost'
+import LoadingState from './components/LoadingState'
 
 
 
@@ -45,7 +46,7 @@ function App() {
     }, [auth])
 
     if (loadingUser) {
-        return <p>Carregando...</p>
+        return <LoadingState />
     }
  
 

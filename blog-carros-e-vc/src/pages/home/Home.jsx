@@ -2,18 +2,21 @@
 import styles from "./Home.module.css"
 
 //Hooks
-import { useNavigate, Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useState } from "react"
 import { useFetchDocuments } from "../../hooks/useFetchDocuments"
 
 //Components
 import PostDetail from "../../components/PostDetail"
+import LoadingState from "../../components/LoadingState"
+import ErrorState from "../../components/ErrorState"
+import EmptyState from "../../components/EmptyState"
 
 
 const Home = () => {
 
     const [query, setQuery] = useState("")
-    const { documents: posts, loading } = useFetchDocuments("posts")
+    const { documents: posts, loading, error } = useFetchDocuments("posts")
 
     const navigate = useNavigate()
 
@@ -44,15 +47,18 @@ const Home = () => {
         </form>
 
         <div>
-            {loading && <p>Carregando...</p> }
+            {loading && <LoadingState /> }
 
-            {posts && posts.map((post) => <PostDetail key={post.id} post={post}/> )}
+            {error && <ErrorState message="Não foi possível carregar os posts." /> }
 
-            {posts && posts.length === 0 && (
-                <div className={styles.noposts}>
-                    <p>Não foram encontrados posts</p>
-                    <Link to="/posts/create" className="btn">Criar primeiro post</Link>
-                </div>
+            {!loading && !error && posts && posts.map((post) => <PostDetail key={post.id} post={post}/> )}
+
+            {!loading && !error && posts && posts.length === 0 && (
+                <EmptyState
+                    message="Não foram encontrados posts."
+                    actionLabel="Criar primeiro post"
+                    actionTo="/posts/create"
+                />
             )}
 
         </div>

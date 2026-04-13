@@ -5,6 +5,9 @@ import { Link } from 'react-router-dom'
 import { useAuthValue } from "../../hooks/useAuthValue"
 import { useFetchDocuments } from "../../hooks/useFetchDocuments"
 import { useDeleteDocument } from "../../hooks/useDeleteDocument"
+import LoadingState from "../../components/LoadingState"
+import ErrorState from "../../components/ErrorState"
+import EmptyState from "../../components/EmptyState"
 
 
 const Dashboard = () => {
@@ -12,13 +15,17 @@ const Dashboard = () => {
     const { user } = useAuthValue()
     const uid = user.uid
 
-    const { documents: posts, loading } = useFetchDocuments("posts", null, uid)
+    const { documents: posts, loading, error } = useFetchDocuments("posts", null, uid)
 
     const { deleteDocument } = useDeleteDocument("posts")
     
 
     if (loading) {
-        return <p>Carregando...</p>
+        return <LoadingState />
+    }
+
+    if (error) {
+        return <ErrorState message="Não foi possível carregar os seus posts." />
     }
 
   return (
@@ -29,11 +36,11 @@ const Dashboard = () => {
         <p>Gerencie os seus posts</p>
 
         {posts && posts.length === 0 ? (
-            <div className={styles.noposts}>
-                <p>Não foram encontrados posts</p>
-
-                <Link to="/posts/create" className="btn">Criar primeiro post</Link>
-            </div>
+            <EmptyState
+                message="Você ainda não publicou nenhum post."
+                actionLabel="Criar primeiro post"
+                actionTo="/posts/create"
+            />
             ) : (
             <div className={styles.post_header}>
                 <span>Título</span>

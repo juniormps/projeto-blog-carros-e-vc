@@ -16,18 +16,6 @@
   margin-bottom: 1em;
 }
 
-.noposts {
-  text-align: center;
-}
-
-.noposts p {
-  margin-bottom: 1.5em;
-}
-
-.noposts a {
-  padding: 10px 25px;
-}
-
 .post_header {
   display: flex;
   justify-content: space-between;
