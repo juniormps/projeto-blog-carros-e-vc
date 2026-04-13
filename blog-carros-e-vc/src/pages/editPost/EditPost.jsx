@@ -3,7 +3,7 @@ import styles from './EditPost.module.css'
 import { useState, useEffect } from "react"
 import { useUpdateDocument } from "../../hooks/useUpdateDocument"
 import { useNavigate, useParams } from "react-router-dom"
-import { useAuthValue } from "../../context/AuthContext"
+import { useAuthValue } from "../../hooks/useAuthValue"
 import { useFetchDocument } from '../../hooks/useFetchDocument'
 
 

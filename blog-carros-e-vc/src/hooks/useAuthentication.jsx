@@ -1,5 +1,3 @@
-import { db } from "../firebase/config"
-
 import {
     getAuth,
     createUserWithEmailAndPassword,
@@ -127,4 +125,3 @@ export const useAuthentication = () => {
   }
 
 }
-
