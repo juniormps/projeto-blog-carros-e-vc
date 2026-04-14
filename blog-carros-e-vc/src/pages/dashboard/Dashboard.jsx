@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import styles from './Dashboard.module.css'
 import { Link } from 'react-router-dom'
 
@@ -5,9 +6,12 @@ import { Link } from 'react-router-dom'
 import { useAuthValue } from "../../hooks/useAuthValue"
 import { useFetchDocuments } from "../../hooks/useFetchDocuments"
 import { useDeleteDocument } from "../../hooks/useDeleteDocument"
+
+//Components
 import LoadingState from "../../components/LoadingState"
 import ErrorState from "../../components/ErrorState"
 import EmptyState from "../../components/EmptyState"
+import ConfirmModal from "../../components/ConfirmModal"
 
 
 const Dashboard = () => {
@@ -16,8 +20,28 @@ const Dashboard = () => {
     const uid = user.uid
 
     const { documents: posts, loading, error } = useFetchDocuments("posts", null, uid)
-
     const { deleteDocument } = useDeleteDocument("posts")
+
+    const [showConfirmModal, setShowConfirmModal] = useState(false)
+    const [postToDelete, setPostToDelete] = useState(null)
+
+    const handleDeleteClick = (post) => {
+        setPostToDelete(post)
+        setShowConfirmModal(true)
+    }
+
+    const handleConfirmDelete = () => {
+        if (postToDelete) {
+            deleteDocument(postToDelete.id)
+            setShowConfirmModal(false)
+            setPostToDelete(null)
+        }
+    }
+
+    const handleCancelDelete = () => {
+        setShowConfirmModal(false)
+        setPostToDelete(null)
+    }
     
 
     if (loading) {
@@ -59,13 +83,24 @@ const Dashboard = () => {
 
                     <Link to={`/posts/edit/${post.id}`} className="btn btn-outline">Editar</Link>
 
-                    <button onClick={() => deleteDocument(post.id)} className="btn btn-outline btn-danger">
+                    <button onClick={() => handleDeleteClick(post)} className="btn btn-outline btn-danger">
                         Excluir
                     </button>
 
                 </div>
             </div>
         ))}
+
+        <ConfirmModal
+            isOpen={showConfirmModal}
+            title="Excluir Post"
+            message={`Você tem certeza que deseja excluir o post "${postToDelete?.title}"? Esta ação não pode ser desfeita.`}
+            confirmText="Excluir"
+            cancelText="Cancelar"
+            isDangerous={true}
+            onConfirm={handleConfirmDelete}
+            onCancel={handleCancelDelete}
+        />
 
     </div>
 
