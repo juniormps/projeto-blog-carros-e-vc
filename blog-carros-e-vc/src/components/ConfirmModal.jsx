@@ -1,32 +1,32 @@
-import { useEffect } from 'react'
-import styles from './ConfirmModal.module.css'
+import { useEffect } from "react";
+import styles from "./ConfirmModal.module.css";
 
 const ConfirmModal = ({
   isOpen,
   title,
   message,
+  confirmText = "Confirmar",
+  cancelText = "Cancelar",
+  isDangerous = false,
+  loading = false,
   onConfirm,
   onCancel,
-  confirmText = 'Confirmar',
-  cancelText = 'Cancelar',
-  isDangerous = false
 }) => {
-  
   // Fechar modal ao pressionar ESC
   useEffect(() => {
     const handleEscapeKey = (event) => {
-      if (event.key === 'Escape' && isOpen) {
-        onCancel()
+      if (event.key === "Escape" && isOpen) {
+        onCancel();
       }
-    }
+    };
 
     if (isOpen) {
-      document.addEventListener('keydown', handleEscapeKey)
-      return () => document.removeEventListener('keydown', handleEscapeKey)
+      document.addEventListener("keydown", handleEscapeKey);
+      return () => document.removeEventListener("keydown", handleEscapeKey);
     }
-  }, [isOpen, onCancel])
+  }, [isOpen, onCancel]);
 
-  if (!isOpen) return null
+  if (!isOpen) return null;
 
   return (
     <div className={styles.overlay} onClick={onCancel}>
@@ -40,23 +40,21 @@ const ConfirmModal = ({
         </div>
 
         <div className={styles.footer}>
-          <button
-            className={styles.cancelBtn}
-            onClick={onCancel}
-          >
+          <button className={styles.cancelBtn} onClick={onCancel}>
             {cancelText}
           </button>
 
           <button
-            className={`${styles.confirmBtn} ${isDangerous ? styles.dangerous : ''}`}
+            className={`${styles.confirmBtn} ${isDangerous ? styles.dangerous : ""}`}
             onClick={onConfirm}
+            disabled={loading}
           >
-            {confirmText}
+            {loading ? "Excluindo..." : confirmText}
           </button>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ConfirmModal
+export default ConfirmModal;
