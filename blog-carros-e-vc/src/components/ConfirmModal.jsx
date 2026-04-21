@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import styles from "./ConfirmModal.module.css";
 
 const ConfirmModal = ({
@@ -12,6 +12,15 @@ const ConfirmModal = ({
   onConfirm,
   onCancel,
 }) => {
+  const confirmButtonRef = useRef(null);
+
+  // Focar no botão de confirmação quando o modal abrir
+  useEffect(() => {
+    if (isOpen && confirmButtonRef.current) {
+      confirmButtonRef.current.focus();
+    }
+  }, [isOpen]);
+
   // Fechar modal ao pressionar ESC
   useEffect(() => {
     const handleEscapeKey = (event) => {
@@ -51,6 +60,7 @@ const ConfirmModal = ({
           </button>
 
           <button
+            ref={confirmButtonRef}
             className={`${styles.confirmBtn} ${isDangerous ? styles.dangerous : ""}`}
             onClick={onConfirm}
             disabled={loading}
