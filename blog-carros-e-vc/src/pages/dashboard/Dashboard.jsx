@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 import styles from "./Dashboard.module.css";
 
 //Hooks
@@ -17,12 +18,29 @@ const Dashboard = () => {
   const { user } = useAuthValue();
   const uid = user.uid;
 
-  const { documents: posts, loading, error } = useFetchDocuments("posts", null, uid);
+  const {
+    documents: posts,
+    loading,
+    error,
+  } = useFetchDocuments("posts", null, uid);
   const { deleteDocument, response } = useDeleteDocument("posts");
 
   const [showConfirmModal, setShowConfirmModal] = useState(false);
-  const [postId, setPostId] = useState(null)
-  const [postTitle, setPostTitle] = useState("")
+  const [postId, setPostId] = useState(null);
+  const [postTitle, setPostTitle] = useState("");
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  // Monitor delete operation
+  useEffect(() => {
+    if (isDeleting && !response.loading) {
+      if (response.error) {
+        toast.error("Erro ao deletar post: " + response.error);
+      } else {
+        toast.success("Post deletado com sucesso!");
+      }
+      setIsDeleting(false);
+    }
+  }, [response.loading, response.error, isDeleting]);
 
   const handleDeleteClick = (post) => {
     setPostId(post.id);
@@ -32,6 +50,7 @@ const Dashboard = () => {
 
   const handleConfirmDelete = async () => {
     if (postId) {
+      setIsDeleting(true);
       await deleteDocument(postId);
       setShowConfirmModal(false);
       setPostId(null);

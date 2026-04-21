@@ -4,6 +4,9 @@ import "./App.css";
 //React Router
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 
+//Toast Notifications
+import { ToastContainer } from "react-toastify";
+
 //Funções do Firebase
 import { onAuthStateChanged } from "firebase/auth";
 
@@ -49,6 +52,17 @@ function App() {
 
   return (
     <>
+      <ToastContainer
+        position="bottom-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       <div>
         <AuthProvider value={{ user }}>
           <BrowserRouter>
