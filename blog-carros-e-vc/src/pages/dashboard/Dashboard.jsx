@@ -21,24 +21,28 @@ const Dashboard = () => {
   const { deleteDocument, response } = useDeleteDocument("posts");
 
   const [showConfirmModal, setShowConfirmModal] = useState(false);
-  const [postToDelete, setPostToDelete] = useState(null);
+  const [postId, setPostId] = useState(null)
+  const [postTitle, setPostTitle] = useState("")
 
   const handleDeleteClick = (post) => {
-    setPostToDelete(post);
+    setPostId(post.id);
+    setPostTitle(post.title);
     setShowConfirmModal(true);
   };
 
   const handleConfirmDelete = async () => {
-    if (postToDelete) {
-      await deleteDocument(postToDelete.id);
+    if (postId) {
+      await deleteDocument(postId);
       setShowConfirmModal(false);
-      setPostToDelete(null);
+      setPostId(null);
+      setPostTitle("");
     }
   };
 
   const handleCancelDelete = () => {
     setShowConfirmModal(false);
-    setPostToDelete(null);
+    setPostId(null);
+    setPostTitle("");
   };
 
   if (loading) {
@@ -95,7 +99,7 @@ const Dashboard = () => {
       <ConfirmModal
         isOpen={showConfirmModal}
         title="Excluir Post"
-        message={`Você tem certeza que deseja excluir o post "${postToDelete?.title}"? Esta ação não pode ser desfeita.`}
+        message={`Você tem certeza que deseja excluir o post "${postTitle}"? Esta ação não pode ser desfeita.`}
         confirmText="Excluir"
         cancelText="Cancelar"
         isDangerous={true}
