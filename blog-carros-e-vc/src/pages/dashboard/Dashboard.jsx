@@ -99,7 +99,12 @@ const Dashboard = () => {
       <ConfirmModal
         isOpen={showConfirmModal}
         title="Excluir Post"
-        message={`Você tem certeza que deseja excluir o post "${postTitle}"? Esta ação não pode ser desfeita.`}
+        message={
+          <p>
+            Você tem certeza que deseja excluir o post{" "}
+            <strong>"{postTitle}"</strong>? Esta ação não pode ser desfeita.
+          </p>
+        }
         confirmText="Excluir"
         cancelText="Cancelar"
         isDangerous={true}
