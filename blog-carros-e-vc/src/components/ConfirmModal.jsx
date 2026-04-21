@@ -30,9 +30,15 @@ const ConfirmModal = ({
 
   return (
     <div className={styles.overlay} onClick={onCancel}>
-      <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
+      <div
+        className={styles.modal}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="modal-title"
+        onClick={(e) => e.stopPropagation()}
+      >
         <div className={styles.header}>
-          <h3>{title}</h3>
+          <h3 id="modal-title">{title}</h3>
         </div>
 
         <div className={styles.body}>
