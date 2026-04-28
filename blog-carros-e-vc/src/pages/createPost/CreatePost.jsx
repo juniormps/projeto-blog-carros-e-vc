@@ -24,13 +24,6 @@ const CreatePost = () => {
     setter(e.target.value);
   };
 
-  // Monitor for errors
-  useEffect(() => {
-    if (response.error) {
-      toast.error("Erro ao criar post: " + response.error);
-    }
-  }, [response.error]);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setFormError("");
@@ -72,6 +65,8 @@ const CreatePost = () => {
     if (insertedDocument) {
       toast.success("Post criado com sucesso!");
       navigate("/");
+    } else {
+      toast.error("Erro ao criar post.");
     }
   };
 

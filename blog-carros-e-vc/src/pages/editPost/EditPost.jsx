@@ -41,13 +41,6 @@ const EditPost = () => {
     setter(e.target.value);
   };
 
-  // Monitor for errors
-  useEffect(() => {
-    if (response.error) {
-      toast.error("Erro ao atualizar post: " + response.error);
-    }
-  }, [response.error]);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setFormError("");
@@ -91,6 +84,8 @@ const EditPost = () => {
     if (updated) {
       toast.success("Post atualizado com sucesso!");
       navigate("/dashboard");
+    } else {
+      toast.error("Erro ao atualizar post.");
     }
   };
 
