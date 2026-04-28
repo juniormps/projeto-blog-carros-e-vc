@@ -1,6 +1,6 @@
 import styles from "./EditPost.module.css";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useAuthValue } from "../../hooks/useAuthValue";
@@ -36,6 +36,8 @@ const EditPost = () => {
 
   const navigate = useNavigate();
 
+  const isSubmitting = useRef(false);
+
   const handleChange = (setter) => (e) => {
     setFormError("");
     setter(e.target.value);
@@ -43,6 +45,11 @@ const EditPost = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (isSubmitting.current) return;
+
+    isSubmitting.current = true;
+
     setFormError("");
 
     let errorMessage = "";
@@ -63,6 +70,7 @@ const EditPost = () => {
 
     if (errorMessage) {
       setFormError(errorMessage);
+      isSubmitting.current = false;
       return;
     }
 
@@ -86,6 +94,7 @@ const EditPost = () => {
       navigate("/dashboard");
     } else {
       toast.error("Erro ao atualizar post.");
+      isSubmitting.current = false;
     }
   };
 
@@ -149,12 +158,12 @@ const EditPost = () => {
               />
             </label>
 
-            {!response.loading && <button className="btn">Editar</button>}
-            {response.loading && (
-              <button className="btn" disabled>
-                Aguarde...
-              </button>
-            )}
+            <button 
+              className="btn" 
+              disabled={response.loading || isSubmitting.current}
+            >
+              {response.loading ? "Aguarde..." : "Editar"}
+            </button>
 
             {response.error && <p className="error">{response.error}</p>}
             {formError && <p className="error">{formError}</p>}

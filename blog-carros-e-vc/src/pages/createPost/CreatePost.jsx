@@ -1,6 +1,6 @@
 import styles from "./CreatePost.module.css";
 
-import { useEffect, useState } from "react";
+import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useAuthValue } from "../../hooks/useAuthValue";
@@ -19,6 +19,8 @@ const CreatePost = () => {
 
   const navigate = useNavigate();
 
+  const isSubmitting = useRef(false);
+
   const handleChange = (setter) => (e) => {
     setFormError("");
     setter(e.target.value);
@@ -26,6 +28,11 @@ const CreatePost = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (isSubmitting.current) return;
+
+    isSubmitting.current = true;
+
     setFormError("");
 
     let errorMessage = "";
@@ -46,6 +53,7 @@ const CreatePost = () => {
 
     if (errorMessage) {
       setFormError(errorMessage);
+      isSubmitting.current = false;
       return;
     }
 
@@ -67,6 +75,7 @@ const CreatePost = () => {
       navigate("/");
     } else {
       toast.error("Erro ao criar post.");
+      isSubmitting.current = false;
     }
   };
 
@@ -120,12 +129,12 @@ const CreatePost = () => {
           />
         </label>
 
-        {!response.loading && <button className="btn">Cadastrar</button>}
-        {response.loading && (
-          <button className="btn" disabled>
-            Aguarde...
-          </button>
-        )}
+        <button 
+          className="btn" 
+          disabled={response.loading || isSubmitting.current}
+        >
+          {response.loading ? "Aguarde..." : "Cadastrar"}
+        </button>
 
         {response.error && <p className="error">{response.error}</p>}
         {formError && <p className="error">{formError}</p>}
