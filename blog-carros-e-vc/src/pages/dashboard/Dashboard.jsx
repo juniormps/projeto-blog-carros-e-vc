@@ -28,19 +28,7 @@ const Dashboard = () => {
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [postId, setPostId] = useState(null);
   const [postTitle, setPostTitle] = useState("");
-  const [isDeleting, setIsDeleting] = useState(false);
 
-  // Monitor delete operation
-  useEffect(() => {
-    if (isDeleting && !response.loading) {
-      if (response.error) {
-        toast.error("Erro ao deletar post: " + response.error);
-      } else {
-        toast.success("Post deletado com sucesso!");
-      }
-      setIsDeleting(false);
-    }
-  }, [response.loading, response.error, isDeleting]);
 
   const handleDeleteClick = (post) => {
     setPostId(post.id);
@@ -49,12 +37,17 @@ const Dashboard = () => {
   };
 
   const handleConfirmDelete = async () => {
-    if (postId) {
-      setIsDeleting(true);
-      await deleteDocument(postId);
+    if (!postId) return;
+
+    const success = await deleteDocument(postId);
+
+    if (success) {
+      toast.success("Post deletado com sucesso!");
       setShowConfirmModal(false);
       setPostId(null);
       setPostTitle("");
+    } else {
+      toast.error("Erro ao deletar post.");
     }
   };
 

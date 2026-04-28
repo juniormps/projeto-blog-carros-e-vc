@@ -4,20 +4,21 @@ import { doc, deleteDoc } from "firebase/firestore"
 
 const initialState = {
   loading: null,
-  error: null
+  error: null,
+  success: null
 }
 
 const deleteReducer = (state, action) => {
 
     switch (action.type) {
         case "LOADING":
-            return { loading: true, error: null }
+            return { loading: true, error: null, success: null }
 
         case "DELETED_DOC":
-            return { loading: false, error: null }
+            return { loading: false, error: null, success: true }
 
         case "ERROR":
-            return { loading: false, error: action.payload }
+            return { loading: false, error: action.payload, success: false }
 
         default:
             return state
@@ -50,12 +51,16 @@ export const useDeleteDocument = (docCollection) => {
                 payload: deletedDocument
             })
 
+            return true
+
         } catch (error) {
 
             checkCancelBeforeDispatch({ 
                 type: "ERROR", 
                 payload: error.message 
             })
+
+            return false
         }
     }
 
