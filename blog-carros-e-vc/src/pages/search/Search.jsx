@@ -23,7 +23,7 @@ const Search = () => {
 
         <h1>Resultados encontrados para: {search}</h1>
         
-        <div className="post-list">
+        <div className={styles.results}>
             {loading && <LoadingState />}
 
             {error && <ErrorState message="Não foi possível carregar o resultado da busca." />}

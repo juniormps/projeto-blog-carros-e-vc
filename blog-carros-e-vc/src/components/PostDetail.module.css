@@ -1,9 +1,13 @@
 .post_detail {
+  width: 100%;
   margin-bottom: 2em;
 }
 
 .post_detail img {
-  max-width: 600px;
+  width: 100%;
+  border-radius: 1rem;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
 }
 
 .post_detail h2 {
@@ -13,10 +17,13 @@
 .post_detail .tags {
   margin-bottom: 1.2em;
   display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
 }
 
 .tags p {
-  margin-right: 0.5em;
+  margin: 0;
 }
 
 .tags span {

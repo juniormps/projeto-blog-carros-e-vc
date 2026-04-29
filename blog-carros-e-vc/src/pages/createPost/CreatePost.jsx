@@ -91,7 +91,7 @@ const CreatePost = () => {
           <input
             type="text"
             name="title"
-            placeholder="E-mail do Pense num bom título..."
+            placeholder="Pense em um bom título..."
             onChange={handleChange(setTitle)}
             value={title}
           />
@@ -119,13 +119,13 @@ const CreatePost = () => {
         </label>
 
         <label>
-          <span>Tags:</span>
-          <input
-            type="text"
-            name="tegs"
-            placeholder="Insira as tags separadas por vírgula"
-            onChange={handleChange(setTags)}
-            value={tags}
+            <span>Tags:</span>
+            <input
+              type="text"
+              name="tags"
+              placeholder="Insira as tags separadas por vírgula"
+              onChange={handleChange(setTags)}
+              value={tags}
           />
         </label>
 

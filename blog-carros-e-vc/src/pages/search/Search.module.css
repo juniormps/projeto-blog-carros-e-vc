@@ -1,14 +1,21 @@
 .search_container {
+  width: min(100%, 48rem);
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  text-align: center;
 }
 
 .search_container h1 {
-  margin-bottom: 1em;
+  margin-bottom: 0.75em;
 }
 
 .search_container p {
-  margin-bottom: 30px;
+  margin-bottom: 1.5rem;
+}
+
+.results {
+  width: 100%;
 }

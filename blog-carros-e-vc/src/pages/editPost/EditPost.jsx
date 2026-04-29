@@ -112,7 +112,7 @@ const EditPost = () => {
               <input
                 type="text"
                 name="title"
-                placeholder="E-mail do Pense num bom título..."
+                placeholder="Pense em um bom título..."
                 onChange={handleChange(setTitle)}
                 value={title}
               />
@@ -133,7 +133,7 @@ const EditPost = () => {
 
             <img
               className={styles.image_preview}
-              src={post.image}
+              src={image}
               alt={post.title}
             />
 
@@ -151,7 +151,7 @@ const EditPost = () => {
               <span>Tags:</span>
               <input
                 type="text"
-                name="tegs"
+                name="tags"
                 placeholder="Insira as tags separadas por vírgula"
                 onChange={handleChange(setTags)}
                 value={tags}

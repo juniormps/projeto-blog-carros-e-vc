@@ -1,10 +1,21 @@
 .post_container {
+  width: min(100%, 48rem);
+  margin: 0 auto;
   text-align: center;
 }
 
 .post_container img {
-    max-width: 1000px;
-    max-height: 1000px;
+  width: 100%;
+  max-width: 100%;
+  max-height: none;
+  border-radius: 1rem;
+  object-fit: cover;
+  margin-bottom: 1.5rem;
+}
+
+.post_container p {
+  text-align: left;
+  line-height: 1.7;
 }
 
 .post_container h3 {
@@ -14,10 +25,12 @@
 .post_container .tags {
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
 }
 
 .tags p {
-  margin-right: 1em;
+  margin: 0;
 }
 
 .tags span {

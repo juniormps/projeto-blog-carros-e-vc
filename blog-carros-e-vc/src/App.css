@@ -1,4 +1,14 @@
 .container {
+    width: min(100% - 2rem, 72rem);
     min-height: 60vh;
-    margin-bottom: 5em;
+    margin: 0 auto 4rem;
+    padding: 1.5rem 0 0;
+}
+
+@media (min-width: 768px) {
+    .container {
+        width: min(100% - 4rem, 72rem);
+        margin-bottom: 5em;
+        padding-top: 2rem;
+    }
 }
