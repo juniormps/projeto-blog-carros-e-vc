@@ -1,0 +1,25 @@
+.searchForm {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  gap: 0.75rem;
+  justify-content: center;
+  margin-bottom: 2em;
+}
+
+.searchForm input {
+  margin-right: 0;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .searchForm {
+    width: min(100%, 48rem);
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .searchForm input {
+    flex: 1;
+  }
+}
