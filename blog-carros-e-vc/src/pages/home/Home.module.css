@@ -24,6 +24,15 @@
   width: 100%;
 }
 
+.posts_list {
+  width: 100%;
+}
+
+.post_item {
+  width: 100%;
+  margin: 0 auto;
+}
+
 @media (min-width: 768px) {
   .search_form {
     width: min(100%, 48rem);
@@ -33,5 +42,15 @@
 
   .search_form input {
     flex: 1;
+  }
+
+  .post_item {
+    max-width: 52rem;
+  }
+}
+
+@media (min-width: 1200px) {
+  .post_item {
+    max-width: 44rem;
   }
 }

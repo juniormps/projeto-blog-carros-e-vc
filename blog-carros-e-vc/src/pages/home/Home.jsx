@@ -46,12 +46,16 @@ const Home = () => {
 
         </form>
 
-        <div>
+        <div className={styles.posts_list}>
             {loading && <LoadingState /> }
 
             {error && <ErrorState message="Não foi possível carregar os posts." /> }
 
-            {!loading && !error && posts && posts.map((post) => <PostDetail key={post.id} post={post}/> )}
+            {!loading && !error && posts && posts.map((post) => (
+                <div key={post.id} className={styles.post_item}>
+                    <PostDetail post={post}/>
+                </div>
+            ))}
 
             {!loading && !error && posts && posts.length === 0 && (
                 <EmptyState
