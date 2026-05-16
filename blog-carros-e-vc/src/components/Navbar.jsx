@@ -1,19 +1,41 @@
 import styles from './Navbar.module.css'
-import { NavLink } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { NavLink, useLocation } from 'react-router-dom'
 import { useAuthentication } from '../hooks/useAuthentication'
 import { useAuthValue } from '../hooks/useAuthValue'
 
 const Navbar = () => {
-
     const { logout } = useAuthentication()
     const { user } = useAuthValue()
+    const location = useLocation()
+    const [isMenuOpen, setIsMenuOpen] = useState(false)
+
+    useEffect(() => {
+        setIsMenuOpen(false)
+    }, [location.pathname])
 
   return (
 
     <nav className={styles.navbar}>
         <NavLink to={'/'} className={styles.brand}>Carros & <span>VC</span> </NavLink>
 
-        <ul className={styles.links_list}>
+        <button
+            type="button"
+            className={styles.menu_toggle}
+            aria-expanded={isMenuOpen}
+            aria-controls="navbar-links"
+            aria-label={isMenuOpen ? 'Fechar menu de navegacao' : 'Abrir menu de navegacao'}
+            onClick={() => setIsMenuOpen((currentState) => !currentState)}
+        >
+            <span className={styles.menu_toggle_bar}></span>
+            <span className={styles.menu_toggle_bar}></span>
+            <span className={styles.menu_toggle_bar}></span>
+        </button>
+
+        <ul
+            id="navbar-links"
+            className={`${styles.links_list} ${isMenuOpen ? styles.links_list_open : ''}`}
+        >
             <li>
                 <NavLink to={'/'} className={({isActive}) => (isActive ? styles.active : "")}>Home</NavLink>
             </li>
