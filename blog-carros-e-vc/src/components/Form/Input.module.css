@@ -1,0 +1,29 @@
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+
+  text-align: left;
+
+  gap: 0.5rem;
+}
+
+.inputGroup span {
+  font-weight: bold;
+}
+
+.inputGroup input {
+  width: 100%;
+
+  border: none;
+  border-bottom: 1px solid #ccc;
+
+  padding: 0.8rem 0;
+
+  background-color: transparent;
+
+  font-size: 1rem;
+}
+
+.inputGroup input::placeholder {
+  color: #aaa;
+}
