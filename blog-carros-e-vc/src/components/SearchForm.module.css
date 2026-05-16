@@ -10,6 +10,15 @@
 .searchForm input {
   margin-right: 0;
   width: 100%;
+  text-align: center;
+}
+
+.searchForm input::placeholder {
+  text-align: center;
+}
+
+.searchForm button {
+  align-self: center;
 }
 
 @media (min-width: 768px) {
