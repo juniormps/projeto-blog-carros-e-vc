@@ -1,8 +1,11 @@
 import styles from './Navbar.module.css'
 import { useEffect, useState } from 'react'
-import { NavLink, useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import { useAuthentication } from '../hooks/useAuthentication'
 import { useAuthValue } from '../hooks/useAuthValue'
+import NavbarBrand from './NavbarBrand'
+import NavbarMenuToggle from './NavbarMenuToggle'
+import NavbarLinkItem from './NavbarLinkItem'
 
 const Navbar = () => {
     const { logout } = useAuthentication()
@@ -15,70 +18,43 @@ const Navbar = () => {
     }, [location.pathname])
 
   return (
-
     <nav className={styles.navbar}>
-        <NavLink to={'/'} className={styles.brand}>Carros & <span>VC</span> </NavLink>
+      <NavbarBrand />
 
-        <button
-            type="button"
-            className={styles.menu_toggle}
-            aria-expanded={isMenuOpen}
-            aria-controls="navbar-links"
-            aria-label={isMenuOpen ? 'Fechar menu de navegacao' : 'Abrir menu de navegacao'}
-            onClick={() => setIsMenuOpen((currentState) => !currentState)}
-        >
-            <span className={styles.menu_toggle_bar}></span>
-            <span className={styles.menu_toggle_bar}></span>
-            <span className={styles.menu_toggle_bar}></span>
-        </button>
+      <NavbarMenuToggle
+        isMenuOpen={isMenuOpen}
+        onToggle={() => setIsMenuOpen((currentState) => !currentState)}
+      />
 
-        <ul
-            id="navbar-links"
-            className={`${styles.links_list} ${isMenuOpen ? styles.links_list_open : ''}`}
-        >
-            <li>
-                <NavLink to={'/'} className={({isActive}) => (isActive ? styles.active : "")}>Home</NavLink>
-            </li>
+      <ul
+        id="navbar-links"
+        className={`${styles.links_list} ${isMenuOpen ? styles.links_list_open : ''}`}
+      >
+        <NavbarLinkItem to="/">Home</NavbarLinkItem>
 
-            {!user && (
-                <>
-                    
-                    <li>
-                        <NavLink to={'/login'} className={({isActive}) => (isActive ? styles.active : "")}>Login</NavLink>
-                    </li>
-                    <li>
-                        <NavLink to={'/register'} className={({isActive}) => (isActive ? styles.active : "")}>Cadastrar</NavLink>
-                    </li>
-                    
-                </>
-            )}
+        {!user && (
+          <>
+            <NavbarLinkItem to="/login">Login</NavbarLinkItem>
+            <NavbarLinkItem to="/register">Cadastrar</NavbarLinkItem>
+          </>
+        )}
 
-            {user && (
-                <>
-                    
-                    <li>
-                        <NavLink to={'/posts/create'} className={({isActive}) => (isActive ? styles.active : "")}>Novo post</NavLink>
-                    </li>
-                    <li>
-                        <NavLink to={'/dashboard'} className={({isActive}) => (isActive ? styles.active : "")}>Dashboard</NavLink>
-                    </li>
-                    
-                </>
-            )}
-            
-            <li>
-                <NavLink to={'/about'} className={({isActive}) => (isActive ? styles.active : "")}>Sobre</NavLink>
-            </li>
+        {user && (
+          <>
+            <NavbarLinkItem to="/posts/create">Novo post</NavbarLinkItem>
+            <NavbarLinkItem to="/dashboard">Dashboard</NavbarLinkItem>
+          </>
+        )}
 
-            {user && (
-                <li>
-                    <button onClick={logout}>Sair</button>
-                </li>
-            )}
+        <NavbarLinkItem to="/about">Sobre</NavbarLinkItem>
 
-        </ul>
+        {user && (
+          <li>
+            <button onClick={logout}>Sair</button>
+          </li>
+        )}
+      </ul>
     </nav>
-
   )
 }
 
