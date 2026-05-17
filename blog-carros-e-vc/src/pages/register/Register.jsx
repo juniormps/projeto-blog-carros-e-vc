@@ -4,6 +4,8 @@ import { useAuthentication } from "../../hooks/useAuthentication";
 
 import Input from "../../components/Form/Input";
 
+import SubmitButton from "../../components/Form/SubmitButton";
+
 import authStyles from "../../styles/auth.module.css";
 
 const Register = () => {
@@ -83,13 +85,7 @@ const Register = () => {
           onChange={(e) => setConfirmPassword(e.target.value)}
         />
 
-        {!loading && <button className="btn">Cadastrar</button>}
-
-        {loading && (
-          <button className="btn" disabled>
-            Aguarde...
-          </button>
-        )}
+        <SubmitButton loading={loading} text="Cadastrar" />
 
         {error && <p className="error">{error}</p>}
       </form>
