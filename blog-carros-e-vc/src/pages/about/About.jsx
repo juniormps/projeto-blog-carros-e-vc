@@ -10,7 +10,7 @@ const About = () => {
     <div className={styles.about}>
 
         <h2>
-            Sobre o Mini <span>Blog</span>
+            Sobre o Carros & <span>VC</span>
         </h2>
 
         <p>
