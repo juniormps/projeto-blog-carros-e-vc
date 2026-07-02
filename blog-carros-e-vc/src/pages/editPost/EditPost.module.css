@@ -31,3 +31,9 @@
   aspect-ratio: 16 / 9;
   object-fit: cover;
 }
+
+@media (min-width: 768px) {
+  .edit_post {
+    width: min(45%, 40rem);
+  }
+}

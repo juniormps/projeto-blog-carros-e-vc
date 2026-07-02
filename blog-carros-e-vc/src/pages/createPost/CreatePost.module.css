@@ -16,3 +16,9 @@
     color: #aaa;
     margin: 0 0 1.5rem;
 }
+
+@media (min-width: 768px) {
+    .create_post {
+        width: min(45%, 40rem);
+    }
+}
