@@ -110,7 +110,7 @@ const CreatePost = () => {
 
                 <Input
                     label="Conteúdo"
-                    type="text"
+                    type="textarea"
                     name="body"
                     placeholder="Insira o conteúdo do post"
                     value={body}

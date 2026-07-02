@@ -31,8 +31,3 @@
   aspect-ratio: 16 / 9;
   object-fit: cover;
 }
-
-.edit_post textarea {
-  min-height: 12rem;
-  resize: vertical;
-}

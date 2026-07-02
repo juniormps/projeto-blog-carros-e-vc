@@ -22,9 +22,15 @@
 
   background-color: transparent;
 
-  font-size: 1rem;
+  font-size: 0.9rem;
 }
 
 .inputGroup input::placeholder {
   color: #aaa;
+  font-size: 0.8rem;
+}
+
+.inputGroup input[type="textarea"] {
+    /*min-height: 12rem;*/
+    resize: vertical;
 }
