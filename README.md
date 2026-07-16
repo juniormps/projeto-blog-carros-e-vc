@@ -1,8 +1,21 @@
 # 🚗 Blog Carros e Você
 
+![React](https://img.shields.io/badge/React-19-blue?logo=react)
+![Vite](https://img.shields.io/badge/Vite-6-purple?logo=vite)
+![Firebase](https://img.shields.io/badge/Firebase-Firestore-orange?logo=firebase)
+![Deploy](https://img.shields.io/badge/Deploy-Vercel-black?logo=vercel)
+
 O **Blog Carros e Você** é uma aplicação web desenvolvida com **React.js** e **Firebase** como projeto de estudos, com o objetivo de consolidar conhecimentos em desenvolvimento frontend moderno.
 
 A aplicação permite que usuários autenticados criem e gerenciem publicações sobre o universo automotivo, colocando em prática conceitos importantes como autenticação, rotas protegidas, gerenciamento de estado, comunicação com banco de dados e componentização.
+
+---
+
+## 🌐 Demonstração
+
+Acesse a aplicação publicada:
+
+**https://blog-carros-e-vc.vercel.app**
 
 ---
 
@@ -46,7 +59,7 @@ Durante o desenvolvimento foram explorados conceitos como:
 
 - Layout responsivo;
 - Componentes reutilizáveis;
-- Mensagens de sucesso e erro utilizando Toasts;
+- Mensagens de sucesso e erro utilizando React Toastify;
 - Página 404 personalizada.
 
 ---
@@ -66,7 +79,7 @@ Durante o desenvolvimento foram explorados conceitos como:
 
 ## 📂 Estrutura do projeto
 
-```
+```text
 src/
 │
 ├── components/
@@ -90,7 +103,7 @@ src/
 ### Clone o repositório
 
 ```bash
-git clone git@github.com:juniormps/blog-carros-e-vc.git
+git clone https://github.com/juniormps/projeto-blog-carros-e-vc.git
 
 cd blog-carros-e-vc
 ```
@@ -101,9 +114,11 @@ cd blog-carros-e-vc
 npm install
 ```
 
-### Configure o Firebase
+### Configure as variáveis de ambiente
 
-Preencha as credenciais do seu projeto Firebase no arquivo responsável pela configuração (`src/firebase/config.js` ou equivalente).
+Crie um arquivo `.env` na raiz do projeto utilizando o arquivo `.env.example` como referência.
+
+Preencha as credenciais do seu projeto Firebase.
 
 ### Execute o projeto
 
@@ -113,13 +128,13 @@ npm run dev
 
 A aplicação estará disponível em:
 
-```
+```text
 http://localhost:5173
 ```
 
 ---
 
-## 📦 Build de produção
+## 📦 Build para produção
 
 ```bash
 npm run build
@@ -140,7 +155,9 @@ Este projeto foi importante para consolidar conhecimentos em:
 - Operações CRUD;
 - Organização de projetos React;
 - CSS Modules;
-- Gerenciamento de estado.
+- Gerenciamento de estado;
+- Deploy de aplicações utilizando a Vercel;
+- Configuração de variáveis de ambiente com Vite (`.env`).
 
 ---
 
@@ -168,3 +185,5 @@ Algumas funcionalidades que podem ser adicionadas futuramente:
 Projeto desenvolvido por **Marcio Junior** como parte dos estudos em **React.js** e desenvolvimento web moderno.
 
 Sempre aberto a sugestões, melhorias e novos aprendizados.
+
+Se você tiver alguma sugestão ou encontrar algum problema, fique à vontade para abrir uma *Issue* ou entrar em contato.
